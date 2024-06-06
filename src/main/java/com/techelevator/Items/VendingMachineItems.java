@@ -31,7 +31,7 @@ public class VendingMachineItems {
 
 
 //                    System.out.println(line);
-                    String productItems = String.format("%s %-20s %f %s", items[0], items[1], Double.parseDouble(items[2]), "Available: " + 5);
+                    String productItems = String.format("%s %-20s %.2f %s", items[0], items[1], Double.parseDouble(items[2]), "Available: " + 5);
                     System.out.println(productItems);
                 }
 

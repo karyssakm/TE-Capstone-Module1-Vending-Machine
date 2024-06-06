@@ -54,6 +54,30 @@ public class VendingMachineCLI {
 		}
 	}
 
+    // This is the process purchase option
+    public void purchaserun() {
+        boolean purchaserunning = true;
+        while (purchaserunning) {
+            String choice = (String) menu.getChoiceFromOptions(PURCHASE_MENU_OPTIONS);
+
+            // A switch statement could also be used here.  Your choice.
+
+            //using if-else statements
+            if (choice.equals(PURCHASE_MENU_OPTION_FEED_MONEY)) {
+
+                // display vending machine items
+                //loadInventory();
+
+
+            } else if (choice.equals( PURCHASE_MENU_OPTION_SELECT_PRODUCT)) {
+                // do purchase
+
+            } else if (choice.equals(PURCHASE_MENU_OPTION_FINISH_TRANSACTION)) {
+                purchaserunning = false;
+            }
+        }
+    }
+
 			//using switch statement
 //            switch (choice) {
 //                case MAIN_MENU_OPTION_DISPLAY_ITEMS:

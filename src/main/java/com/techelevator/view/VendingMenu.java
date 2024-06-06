@@ -60,4 +60,5 @@ public class VendingMenu {
 		out.print(System.lineSeparator() + "Please choose an option >>> ");
 		out.flush();
 	}
+
 }

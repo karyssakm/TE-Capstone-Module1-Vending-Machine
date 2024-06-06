@@ -2,6 +2,9 @@ package com.techelevator.view;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -21,7 +24,7 @@ public class MenuTest {
 
 	@Test
 	public void displays_a_list_of_menu_options_and_prompts_user_to_make_a_choice() {
-		Object[] options = new Object[] { Integer.valueOf(3), "Blind", "Mice" };
+		Object[] options = new Object[]{Integer.valueOf(3), "Blind", "Mice"};
 		VendingMenu menu = getMenuForTesting();
 
 		menu.getChoiceFromOptions(options);
@@ -34,7 +37,7 @@ public class MenuTest {
 	@Test
 	public void returns_object_corresponding_to_user_choice() {
 		Integer expected = Integer.valueOf(456);
-		Integer[] options = new Integer[] { Integer.valueOf(123), expected, Integer.valueOf(789) };
+		Integer[] options = new Integer[]{Integer.valueOf(123), expected, Integer.valueOf(789)};
 		VendingMenu menu = getMenuForTestingWithUserInput("2" + System.lineSeparator());
 
 		Integer result = (Integer) menu.getChoiceFromOptions(options);
@@ -44,7 +47,7 @@ public class MenuTest {
 
 	@Test
 	public void redisplays_menu_if_user_does_not_choose_valid_option() {
-		Object[] options = new Object[] { "Larry", "Curly", "Moe" };
+		Object[] options = new Object[]{"Larry", "Curly", "Moe"};
 		VendingMenu menu = getMenuForTestingWithUserInput("4" + System.lineSeparator() + "1" + System.lineSeparator());
 
 		menu.getChoiceFromOptions(options);
@@ -59,7 +62,7 @@ public class MenuTest {
 
 	@Test
 	public void redisplays_menu_if_user_chooses_option_less_than_1() {
-		Object[] options = new Object[] { "Larry", "Curly", "Moe" };
+		Object[] options = new Object[]{"Larry", "Curly", "Moe"};
 		VendingMenu menu = getMenuForTestingWithUserInput("0" + System.lineSeparator() + "1" + System.lineSeparator());
 
 		menu.getChoiceFromOptions(options);
@@ -74,7 +77,7 @@ public class MenuTest {
 
 	@Test
 	public void redisplays_menu_if_user_enters_garbage() {
-		Object[] options = new Object[] { "Larry", "Curly", "Moe" };
+		Object[] options = new Object[]{"Larry", "Curly", "Moe"};
 		VendingMenu menu = getMenuForTestingWithUserInput("Mickey Mouse" + System.lineSeparator() + "1" + System.lineSeparator());
 
 		menu.getChoiceFromOptions(options);
@@ -95,4 +98,6 @@ public class MenuTest {
 	private VendingMenu getMenuForTesting() {
 		return getMenuForTestingWithUserInput("1" + System.lineSeparator());
 	}
+
+
 }
