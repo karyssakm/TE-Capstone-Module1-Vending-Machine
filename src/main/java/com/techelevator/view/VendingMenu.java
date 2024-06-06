@@ -24,6 +24,8 @@ public class VendingMenu {
 		return choice;
 	}
 
+
+
 	private Object getChoiceFromUserInput(Object[] options) {
 		Object choice = null;
 		String userInput = in.nextLine();
@@ -43,6 +45,14 @@ public class VendingMenu {
 
 	private void displayMenuOptions(Object[] options) {
 		out.println();
+
+		//add in umbrella corp spacing to menu
+		out.println("*****************************************");
+		out.println("*  *  *   *   UMBRELLA CORP   *   *  *  *");
+		out.println("*****************************************");
+
+		out.println();
+
 		for (int i = 0; i < options.length; i++) {
 			int optionNum = i + 1;
 			out.println(optionNum + ") " + options[i]);
