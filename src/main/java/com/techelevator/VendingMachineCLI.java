@@ -28,6 +28,7 @@ public class VendingMachineCLI {
     private PurchaseMenu purchaseMenu;
     private BigDecimal currentBalance; //changed this
 
+
     // add VendingMachineItems to constructor to encapsulate the functionality within VendingMachineCLI
     // Initialize and instantiate
     public VendingMachineCLI(VendingMenu menu,PurchaseMenu purchaseMenu) {
@@ -35,6 +36,7 @@ public class VendingMachineCLI {
         this.vendingMachineItems = new VendingMachineItems();
         this.purchaseMenu = purchaseMenu;
         this.currentBalance = BigDecimal.ZERO.setScale(2);  //initialize balance to 0 (default)
+
 
     }
 
@@ -83,9 +85,12 @@ public class VendingMachineCLI {
 
             } else if (choice.equals( PURCHASE_MENU_OPTION_SELECT_PRODUCT)) {
                 // do purchase
+                vendingMachineItems.selectProduct();
+
+
 
             } else if (choice.equals(PURCHASE_MENU_OPTION_FINISH_TRANSACTION)) {
-                purchasing = false;
+                // return the user's change
             }
         }
     }

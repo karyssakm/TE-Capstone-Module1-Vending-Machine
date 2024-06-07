@@ -7,6 +7,8 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.Scanner;
 
+import static java.lang.System.out;
+
 public class PurchaseMenu {
     private PrintWriter out;
     private Scanner in;
@@ -31,6 +33,7 @@ public class PurchaseMenu {
         }
         return choice;
     }
+
 
     /************************************************************************************
                                  GETTING INPUT FROM USER
@@ -108,16 +111,13 @@ public class PurchaseMenu {
             } else {
                 BigDecimal amountToAdd = BigDecimal.valueOf(amount).setScale(2, RoundingMode.HALF_UP);
                 currentBalance = currentBalance.add(amountToAdd);
-                out.println("You have added $" + amountToAdd + " to the machine.");
-                out.println();
-                out.println("Current Money Provided: $" + currentBalance.setScale(2, RoundingMode.HALF_UP));
-                out.println();
+                out.println("You have added $" + amountToAdd + " to the machine.\n");
+                out.println("Current Money Provided: $" + currentBalance.setScale(2, RoundingMode.HALF_UP) + "\n");
                 out.flush();
 //            in.nextLine();
             }
         } catch (NumberFormatException e) {
-            out.print("Invalid input. Please enter a dollar amount.");
-            out.println();
+            out.print("Invalid input. Please enter a dollar amount.\n");
             out.flush();
 
         }
@@ -125,7 +125,40 @@ public class PurchaseMenu {
     }
 
 
-    // DISPLAY CURRENT BALANCE TO USER
+
+
+
+    /************************************************************************************
+     SELECT PRODUCT - ASKING USER TO SELECT A PRODUCT
+     ***********************************************************************************/
+    public BigDecimal selectProduct(String itemName) {
+        out.print(System.lineSeparator() + "Select product to purchase from machine:");
+        out.flush();
+
+
+        try {
+            String itemChoice = new String itemName;
+
+            if (amount <= 0) {
+                out.print("Invalid amount. Please enter a positive amount.");
+                out.println();
+                out.flush();
+            } else {
+                BigDecimal amountToAdd = BigDecimal.valueOf(amount).setScale(2, RoundingMode.HALF_UP);
+                currentBalance = currentBalance.add(amountToAdd);
+                out.println("You have added $" + amountToAdd + " to the machine.\n");
+                out.println("Current Money Provided: $" + currentBalance.setScale(2, RoundingMode.HALF_UP) + "\n");
+                out.flush();
+//            in.nextLine();
+            }
+        } catch (NumberFormatException e) {
+            out.print("Invalid input. Please enter a dollar amount.\n");
+            out.flush();
+
+        }
+        return currentBalance;
+    }
+
 
 
 }
