@@ -30,7 +30,7 @@ public class VendingMachineCLI {
 
     // add VendingMachineItems to constructor to encapsulate the functionality within VendingMachineCLI
     // Initialize and instantiate
-    public VendingMachineCLI(VendingMenu menu,PurchaseMenu purchaseMenu ) {
+    public VendingMachineCLI(VendingMenu menu,PurchaseMenu purchaseMenu) {
         this.menu = menu;
         this.vendingMachineItems = new VendingMachineItems();
         this.purchaseMenu = purchaseMenu;
@@ -43,8 +43,6 @@ public class VendingMachineCLI {
 		boolean running = true;
 		while (running) {
 			String choice = (String) menu.getChoiceFromOptions(MAIN_MENU_OPTIONS);
-
-			// A switch statement could also be used here.  Your choice.
 
 			//using if-else statements
 			if (choice.equals(MAIN_MENU_OPTION_DISPLAY_ITEMS)) {
@@ -63,20 +61,21 @@ public class VendingMachineCLI {
 	}
 
 
+
     // This is the process purchase option
     public void purchaseRun() {
         boolean purchasing = true;
         while (purchasing) {
 
             //Get user choice from purchase menu
-            String choice = (String) purchaseMenu.getChoiceFromPurchaseOptions(PURCHASE_MENU_OPTIONS);
+            String choice = (String) purchaseMenu.getChoiceFromPurchaseOptions(PURCHASE_MENU_OPTIONS, this.currentBalance);
 
-
-            // A switch statement could also be used here.  Your choice.
 
             //using if-else statements
             if (choice.equals(PURCHASE_MENU_OPTION_FEED_MONEY)) {
-                currentBalance = purchaseMenu.feedingMoney(currentBalance);
+                this.currentBalance = purchaseMenu.feedingMoney(this.currentBalance);
+
+
             } else if (choice.equals( PURCHASE_MENU_OPTION_SELECT_PRODUCT)) {
                 // do purchase
 
@@ -87,10 +86,9 @@ public class VendingMachineCLI {
     }
 
 
-
-
-
-
+    private void displayCurrentBalance() {
+        purchaseMenu.displayBalance(this.currentBalance);
+    }
 
 
     //using switch statement
@@ -118,29 +116,6 @@ public class VendingMachineCLI {
         VendingMachineCLI cli = new VendingMachineCLI(menu, purchaseMenu);
         cli.run();
     }
-
-
-    // Create a path from option 1
-//    public void loadInventory() {
-//        // Create a path to read the file
-//        File myFile = new File("C:\\Users\\Student\\workspace\\module-1-capstone-team-6\\vendingmachine.csv");
-//
-//        // Use scanner to read the file
-//        try (Scanner scanner = new Scanner(myFile)) {
-//            // Read each line in file
-//            while (scanner.hasNextLine()) {
-//                String line = scanner.nextLine();
-//                System.out.println(line);
-//            }
-//        } catch (FileNotFoundException e) {
-//            System.out.println("File Not Found: " + e.getMessage());
-//        }
-//    }
-
-
-
-
-
 }
 
 

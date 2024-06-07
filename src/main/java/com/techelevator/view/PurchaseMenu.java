@@ -18,11 +18,13 @@ public class PurchaseMenu {
 //        this.currentMoneyProvided = 0;
     }
 
+
+
     // showing purchase options based on user input
-    public Object getChoiceFromPurchaseOptions(Object[] options) {
+    public Object getChoiceFromPurchaseOptions(Object[] options, BigDecimal currentBalance) {
         Object choice = null;
         while (choice == null) {
-            displayPurchaseOptions(options);
+            displayPurchaseOptions(options, currentBalance);
             choice = purchaseOptionFromUserInput(options);
         }
         return choice;
@@ -46,8 +48,9 @@ public class PurchaseMenu {
         return choice;
     }
 
+
     // Displaying the Purchase Menu Options
-    private void displayPurchaseOptions(Object[] options) {
+    private void displayPurchaseOptions(Object[] options, BigDecimal currentBalance) {
         out.println();
 
         //add in umbrella corp spacing to menu
@@ -57,11 +60,14 @@ public class PurchaseMenu {
 
         out.println();
 
-////        // Display current balance in purchase menu
-//        out.println("Current balance: $" + currentBalance.setScale(2, RoundingMode.HALF_UP));
+        // Display current balance in purchase menu
+//        displayBalance(currentBalance);
 //        out.println();
+        out.println("Current Balance: $" + currentBalance.setScale(2, RoundingMode.HALF_UP));
+        out.flush();
 
 
+        //print menu options
         for (int i = 0; i < options.length; i++) {
             int optionNum = i + 1;
             out.println(optionNum + ") " + options[i]);
@@ -72,45 +78,16 @@ public class PurchaseMenu {
 
 
     //need to add display current balance to the displayPurchaseOptions above
-//    private void displayCurrentBalance(BigDecimal currentBalance) {
-//        out.println("Current Balance: $" + currentBalance.setScale(2, RoundingMode.HALF_UP));
-//        out.println();
+//    public void displayBalance(BigDecimal currentBalance) {
+//        System.out.println("Current Balance: $" + currentBalance.setScale(2, RoundingMode.HALF_UP));
+//        System.out.flush();
 //    }
 
-    // (1) Feeding Money - Code
-//    public double feedingMoney() {
-//        out.println("Enter the amount of money to feed machine (Dollars only): $");
-//        out.flush();
-//
-//        int amount = 0;
-//        try {
-//            amount = in.nextInt();
-//            if (amount <= 0) {
-//                out.println(" Invalid amount. Please enter a positive amount.");
-//                out.flush();
-//            } else {
-//                out.println("You have added: $" + amount + " to the machine");
-//                out.flush();
-//                in.nextLine();
-//            }
-//        } catch (NumberFormatException e) {
-//            out.println("Invalid input. Please enter a dollar amount.");
-//            out.flush();
-//            in.nextLine();
-//        }
-//
-//
-//        return amount;
-//    }
-//
-//    public void getBalance(double amount) {
-//        double currentBalance = 0;
-//        if (amount > 0) {
-//            currentBalance = amount;
-//        }
-//        out.println("Current Balance: $" + currentBalance);
-//    }
 
+
+
+
+    // FEEDING MONEY - ASKING USER FOR MONEY INPUT AND ERRORS IF NOT AN INTEGER
     public BigDecimal feedingMoney(BigDecimal currentBalance) {
         out.print(System.lineSeparator() + "Enter the amount of money to feed machine (Dollars only): $");
         out.flush();
@@ -118,49 +95,35 @@ public class PurchaseMenu {
 //    int amount = 0;
         try {
             int amount = Integer.parseInt(in.nextLine());
-//
-//            BigDecimal amount = new BigDecimal(input);
-
 //        amount = in.nextInt();
+
             if (amount <= 0) {
-                System.out.print("Invalid amount. Please enter a positive amount.");
-                System.out.flush();
+                out.print("Invalid amount. Please enter a positive amount.");
+                out.println();
+                out.flush();
             } else {
                 BigDecimal amountToAdd = BigDecimal.valueOf(amount).setScale(2, RoundingMode.HALF_UP);
                 currentBalance = currentBalance.add(amountToAdd);
-                System.out.println("You have added: $" + amountToAdd + " to the machine");
-                System.out.println("Current balance: $" + currentBalance.setScale(2, RoundingMode.HALF_UP));
+                out.println("You have added: $" + amountToAdd + " to the machine");
+                out.println("Current Money Provided: $" + currentBalance.setScale(2, RoundingMode.HALF_UP));
                 out.println();
-                System.out.flush();
+                out.flush();
 //            in.nextLine();
             }
         } catch (NumberFormatException e) {
-            System.out.print("Invalid input. Please enter a dollar amount.");
-            System.out.flush();
+            out.print("Invalid input. Please enter a dollar amount.");
+            out.println();
+            out.flush();
 
         }
-
         return currentBalance;
     }
 
-    public void displayBalance(BigDecimal currentBalance) {
-        System.out.println("Current Balance: $" + currentBalance.setScale(2, RoundingMode.HALF_UP));
-        System.out.flush();
-    }
+
+    // DISPLAY CURRENT BALANCE TO USER
+
 
 }
-
-
-
-//public void  getBalance(double  amount ) {
-//    double currentBalance = 0;
-//    if (amount > 0) {
-//        currentBalance = amount;
-//    }
-//    out.println("Current Balance: $" + currentBalance);
-//}
-
-
 
 
 
