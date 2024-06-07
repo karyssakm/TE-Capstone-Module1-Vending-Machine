@@ -53,6 +53,8 @@ public class VendingMenu {
 
 		out.println();
 
+
+
 		for (int i = 0; i < options.length; i++) {
 			int optionNum = i + 1;
 			out.println(optionNum + ") " + options[i]);

@@ -4,6 +4,8 @@ import com.techelevator.Items.VendingMachineItems;
 import com.techelevator.view.PurchaseMenu;
 import com.techelevator.view.VendingMenu;
 
+import java.math.BigDecimal;
+
 
 public class VendingMachineCLI {
 
@@ -24,7 +26,7 @@ public class VendingMachineCLI {
     private VendingMenu menu;
     private VendingMachineItems vendingMachineItems;
     private PurchaseMenu purchaseMenu;
-    private double getBalance;
+    private BigDecimal currentBalance; //changed this
 
     // add VendingMachineItems to constructor to encapsulate the functionality within VendingMachineCLI
     // Initialize and instantiate
@@ -32,7 +34,7 @@ public class VendingMachineCLI {
         this.menu = menu;
         this.vendingMachineItems = new VendingMachineItems();
         this.purchaseMenu = purchaseMenu;
-        this.getBalance = 0.00;
+        this.currentBalance = BigDecimal.ZERO.setScale(2);  //initialize balance to 0 (default)
 
     }
 
@@ -48,7 +50,6 @@ public class VendingMachineCLI {
 			if (choice.equals(MAIN_MENU_OPTION_DISPLAY_ITEMS)) {
 
 				// display vending machine items
-                //loadInventory();
 				vendingMachineItems.loadInventory();
 
 			} else if (choice.equals(MAIN_MENU_OPTION_PURCHASE)) {
@@ -66,15 +67,16 @@ public class VendingMachineCLI {
     public void purchaseRun() {
         boolean purchasing = true;
         while (purchasing) {
+
+            //Get user choice from purchase menu
             String choice = (String) purchaseMenu.getChoiceFromPurchaseOptions(PURCHASE_MENU_OPTIONS);
+
 
             // A switch statement could also be used here.  Your choice.
 
             //using if-else statements
             if (choice.equals(PURCHASE_MENU_OPTION_FEED_MONEY)) {
-
-                double amount = purchaseMenu.feedingMoney();
-                purchaseMenu.getBalance(amount);
+                currentBalance = purchaseMenu.feedingMoney(currentBalance);
             } else if (choice.equals( PURCHASE_MENU_OPTION_SELECT_PRODUCT)) {
                 // do purchase
 
