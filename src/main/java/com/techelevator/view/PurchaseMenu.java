@@ -20,7 +20,9 @@ public class PurchaseMenu {
 
 
 
-    // showing purchase options based on user input
+    /************************************************************************************
+        SHOWING MENU OPTIONS BASED ON USER INPUT
+     ***********************************************************************************/
     public Object getChoiceFromPurchaseOptions(Object[] options, BigDecimal currentBalance) {
         Object choice = null;
         while (choice == null) {
@@ -30,7 +32,9 @@ public class PurchaseMenu {
         return choice;
     }
 
-    // Getting the input from a user
+    /************************************************************************************
+                                 GETTING INPUT FROM USER
+     ***********************************************************************************/
     private Object purchaseOptionFromUserInput(Object[] options) {
         Object choice = null;
         String userInput = in.nextLine();
@@ -49,7 +53,9 @@ public class PurchaseMenu {
     }
 
 
-    // Displaying the Purchase Menu Options
+    /************************************************************************************
+                            DISPLAY PURCHASE MENU OPTIONS
+     ***********************************************************************************/
     private void displayPurchaseOptions(Object[] options, BigDecimal currentBalance) {
         out.println();
 
@@ -61,9 +67,8 @@ public class PurchaseMenu {
         out.println();
 
         // Display current balance in purchase menu
-//        displayBalance(currentBalance);
-//        out.println();
-        out.println("Current Balance: $" + currentBalance.setScale(2, RoundingMode.HALF_UP));
+        out.println("Current Money Provided: $" + currentBalance.setScale(2, RoundingMode.HALF_UP));
+        out.println();
         out.flush();
 
 
@@ -79,15 +84,14 @@ public class PurchaseMenu {
 
     //need to add display current balance to the displayPurchaseOptions above
     public void displayBalance(BigDecimal currentBalance) {
-        System.out.println("Current Balance: $" + currentBalance.setScale(2, RoundingMode.HALF_UP));
-        System.out.flush();
+        out.println("Current Balance: $" + currentBalance.setScale(2, RoundingMode.HALF_UP));
+        out.flush();
     }
 
 
-
-
-
-    // FEEDING MONEY - ASKING USER FOR MONEY INPUT AND ERRORS IF NOT AN INTEGER
+/************************************************************************************
+       FEEDING MONEY - ASKING USER FOR MONEY INPUT AND ERRORS IF NOT AN INTEGER
+ ***********************************************************************************/
     public BigDecimal feedingMoney(BigDecimal currentBalance) {
         out.print(System.lineSeparator() + "Enter the amount of money to feed machine (Dollars only): $");
         out.flush();
@@ -104,7 +108,8 @@ public class PurchaseMenu {
             } else {
                 BigDecimal amountToAdd = BigDecimal.valueOf(amount).setScale(2, RoundingMode.HALF_UP);
                 currentBalance = currentBalance.add(amountToAdd);
-                out.println("You have added: $" + amountToAdd + " to the machine");
+                out.println("You have added $" + amountToAdd + " to the machine.");
+                out.println();
                 out.println("Current Money Provided: $" + currentBalance.setScale(2, RoundingMode.HALF_UP));
                 out.println();
                 out.flush();

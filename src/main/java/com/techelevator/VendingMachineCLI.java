@@ -39,6 +39,9 @@ public class VendingMachineCLI {
     }
 
 
+    /************************************************************************************
+                                    MAIN MENU OPTIONS
+     ***********************************************************************************/
     public void run() {
 		boolean running = true;
 		while (running) {
@@ -62,7 +65,9 @@ public class VendingMachineCLI {
 
 
 
-    // This is the process purchase option
+    /************************************************************************************
+                             PROCESS PURCHASE RUN OPTIONS
+     ***********************************************************************************/
     public void purchaseRun() {
         boolean purchasing = true;
         while (purchasing) {
@@ -85,7 +90,7 @@ public class VendingMachineCLI {
         }
     }
 
-
+// method to display balance below the title in the purchase menu option
     private void displayCurrentBalance() {
         purchaseMenu.displayBalance(this.currentBalance);
     }
