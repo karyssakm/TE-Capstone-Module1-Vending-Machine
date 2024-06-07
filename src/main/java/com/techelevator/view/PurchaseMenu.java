@@ -66,7 +66,7 @@ public class PurchaseMenu {
             int optionNum = i + 1;
             out.println(optionNum + ") " + options[i]);
         }
-        out.println(System.lineSeparator() + "Please choose an option >>> ");
+        out.print(System.lineSeparator() + "Please choose an option >>> ");
         out.flush();
     }
 
@@ -112,7 +112,7 @@ public class PurchaseMenu {
 //    }
 
     public BigDecimal feedingMoney(BigDecimal currentBalance) {
-        out.println(System.lineSeparator() + "Enter the amount of money to feed machine (Dollars only): $");
+        out.print(System.lineSeparator() + "Enter the amount of money to feed machine (Dollars only): $");
         out.flush();
 
 //    int amount = 0;
@@ -123,7 +123,7 @@ public class PurchaseMenu {
 
 //        amount = in.nextInt();
             if (amount <= 0) {
-                System.out.println("Invalid amount. Please enter a positive amount.");
+                System.out.print("Invalid amount. Please enter a positive amount.");
                 System.out.flush();
             } else {
                 BigDecimal amountToAdd = BigDecimal.valueOf(amount).setScale(2, RoundingMode.HALF_UP);
@@ -135,7 +135,7 @@ public class PurchaseMenu {
 //            in.nextLine();
             }
         } catch (NumberFormatException e) {
-            System.out.println("Invalid input. Please enter a dollar amount.");
+            System.out.print("Invalid input. Please enter a dollar amount.");
             System.out.flush();
 
         }

@@ -48,7 +48,7 @@ public class VendingMenu {
 
 		//add in umbrella corp spacing to menu
 		out.println("*****************************************");
-		out.println("*  *  *   *   UMBRELLA CORP   *   *  *  *");
+		out.println("*  *  *   *   Umbrella Corp   *   *  *  *");
 		out.println("*****************************************");
 
 		out.println();
