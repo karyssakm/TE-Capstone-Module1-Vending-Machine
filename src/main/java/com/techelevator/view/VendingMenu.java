@@ -61,4 +61,8 @@ public class VendingMenu {
 		out.flush();
 	}
 
+//	public void close() {
+//		out.close();
+//		in.close();
+//	}
 }

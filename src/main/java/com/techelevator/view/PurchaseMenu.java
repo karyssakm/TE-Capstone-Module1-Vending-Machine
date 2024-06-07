@@ -14,6 +14,7 @@ public class PurchaseMenu {
     public PurchaseMenu(InputStream input, OutputStream output) {
         this.out = new PrintWriter(output);
         this.in = new Scanner(input);
+//        this.currentMoneyProvided = 0;
     }
     // showing purchase options based on user input
     public Object getChoiceFromPurchaseOptions(Object[] options) {
@@ -56,30 +57,41 @@ public class PurchaseMenu {
             int optionNum = i + 1;
             out.println(optionNum + ") " + options[i]);
         }
-        out.print(System.lineSeparator() + "Please choose an option >>> ");
+        out.println(System.lineSeparator() + "Please choose an option >>> ");
         out.flush();
     }
 
     // (1) Feeding Money - Code
-    public double  feedingMoney(){
-        out.print("Enter the amount of money to feed machine (Dollars only): $");
+    public double  feedingMoney() {
+        out.println("Enter the amount of money to feed machine (Dollars only): $");
         out.flush();
-        int  amount = 0;
-        try{
-            if ( amount < 0 ){
-                out.print(" Invalid amount. Please enter a positive amount.");
+
+        int amount = 0;
+        try {
+            amount = in.nextInt();
+            if (amount <= 0) {
+                out.println(" Invalid amount. Please enter a positive amount.");
                 out.flush();
-            }else{
-                out.print("you have added: $"+ amount + " to the machine");
-
+            } else {
+                out.println("You have added: $" + amount + " to the machine");
+                out.flush();
+                in.nextLine();
             }
-        } catch (NumberFormatException e){
-            out.print("Invalid input. Please enter a dollar amount.");
+        } catch (NumberFormatException e) {
+            out.println("Invalid input. Please enter a dollar amount.");
             out.flush();
+            in.nextLine();
         }
+
+
         return amount;
-
-
+    }
+    public void  getBalance(double  amount ) {
+        double currentBalance = 0;
+        if (amount > 0) {
+            currentBalance = amount;
+        }
+        out.println("Current Balance: $" + currentBalance);
     }
 
 }

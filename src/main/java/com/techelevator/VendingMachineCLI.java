@@ -24,14 +24,15 @@ public class VendingMachineCLI {
     private VendingMenu menu;
     private VendingMachineItems vendingMachineItems;
     private PurchaseMenu purchaseMenu;
-
+    private double getBalance;
 
     // add VendingMachineItems to constructor to encapsulate the functionality within VendingMachineCLI
     // Initialize and instantiate
-    public VendingMachineCLI(VendingMenu menu,PurchaseMenu purchaseMenu) {
+    public VendingMachineCLI(VendingMenu menu,PurchaseMenu purchaseMenu ) {
         this.menu = menu;
         this.vendingMachineItems = new VendingMachineItems();
         this.purchaseMenu = purchaseMenu;
+        this.getBalance = 0.00;
 
     }
 
@@ -60,6 +61,7 @@ public class VendingMachineCLI {
 		}
 	}
 
+
     // This is the process purchase option
     public void purchaseRun() {
         boolean purchasing = true;
@@ -71,8 +73,8 @@ public class VendingMachineCLI {
             //using if-else statements
             if (choice.equals(PURCHASE_MENU_OPTION_FEED_MONEY)) {
 
-                purchaseMenu.feedingMoney();
-
+                double amount = purchaseMenu.feedingMoney();
+                purchaseMenu.getBalance(amount);
             } else if (choice.equals( PURCHASE_MENU_OPTION_SELECT_PRODUCT)) {
                 // do purchase
 
@@ -82,7 +84,14 @@ public class VendingMachineCLI {
         }
     }
 
-			//using switch statement
+
+
+
+
+
+
+
+    //using switch statement
 //            switch (choice) {
 //                case MAIN_MENU_OPTION_DISPLAY_ITEMS:
 //                    displayItems();
