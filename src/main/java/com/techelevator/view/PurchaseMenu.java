@@ -78,10 +78,10 @@ public class PurchaseMenu {
 
 
     //need to add display current balance to the displayPurchaseOptions above
-//    public void displayBalance(BigDecimal currentBalance) {
-//        System.out.println("Current Balance: $" + currentBalance.setScale(2, RoundingMode.HALF_UP));
-//        System.out.flush();
-//    }
+    public void displayBalance(BigDecimal currentBalance) {
+        System.out.println("Current Balance: $" + currentBalance.setScale(2, RoundingMode.HALF_UP));
+        System.out.flush();
+    }
 
 
 
