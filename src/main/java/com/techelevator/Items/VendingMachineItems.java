@@ -29,7 +29,7 @@ public class VendingMachineItems {
 
 
 
-   public int updateInventory(String item, int quantity) {
+   public int updateInventory(String item, int currentQuantity) {
        int currentQuantity = itemList.getOrDefault(item ,5);
        if (itemList.containsKey(item)) {
            currentQuantity = itemList.get(item);

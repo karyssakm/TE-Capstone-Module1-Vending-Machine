@@ -167,10 +167,17 @@ public class PurchaseMenu {
                 out.println("WHOMP WHOMP you don't have enough money please add more");
                 return currentBalance;
             }
-            if(vendingMachineItems.updateInventory(productCode, currentQuantity));
-            //Process purchase and subtract item cost from current balance
-            currentBalance = currentBalance.subtract(productCost);
+            if(vendingMachineItems.updateInventory(productCode) <= 0){
+                out.println("Sorry our itens are too good! Sold Out");
+                return currentBalance;
+            }
 
+            //Process purchase and subtract item cost from current balance
+           int currentQuantity = vendingMachineItems.updateInventory(productCode);
+
+            currentBalance = currentBalance.subtract(productCost);
+            // Update Inventory after purchasing an item
+            vendingMachineItems.updateInventory(productCode,currentQuantity-1 );
             out.println("You have purchased the item " + productCode);
             out.println("Remaining Balance: $" + currentBalance.setScale(2));
             out.flush();
