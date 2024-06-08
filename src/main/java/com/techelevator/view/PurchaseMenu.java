@@ -1,5 +1,8 @@
 package com.techelevator.view;
 
+import com.techelevator.Items.VendingMachineItems;
+
+import java.io.File;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintWriter;
@@ -12,18 +15,26 @@ import static java.lang.System.out;
 public class PurchaseMenu {
     private PrintWriter out;
     private Scanner in;
+    private VendingMachineItems vendingMachineItems;
 
 
-    public PurchaseMenu(InputStream input, OutputStream output) {
+    public PurchaseMenu(InputStream input, OutputStream output, VendingMachineItems vendingMachineItems) {
         this.out = new PrintWriter(output);
         this.in = new Scanner(input);
+        this.vendingMachineItems = vendingMachineItems;
 //        this.currentMoneyProvided = 0;
     }
 
 
+    /************************************************************************************
+     THE PURCHASE MENU IS RESPONSIBLE FOR MANAGING THE USER'S BALANCE AND THEIR PURCHASES
+     ***********************************************************************************/
+
+
+
 
     /************************************************************************************
-        SHOWING MENU OPTIONS BASED ON USER INPUT
+     SHOWING MENU OPTIONS BASED ON USER INPUT
      ***********************************************************************************/
     public Object getChoiceFromPurchaseOptions(Object[] options, BigDecimal currentBalance) {
         Object choice = null;
@@ -36,7 +47,7 @@ public class PurchaseMenu {
 
 
     /************************************************************************************
-                                 GETTING INPUT FROM USER
+     GETTING INPUT FROM USER
      ***********************************************************************************/
     private Object purchaseOptionFromUserInput(Object[] options) {
         Object choice = null;
@@ -57,7 +68,7 @@ public class PurchaseMenu {
 
 
     /************************************************************************************
-                            DISPLAY PURCHASE MENU OPTIONS
+     DISPLAY PURCHASE MENU OPTIONS
      ***********************************************************************************/
     private void displayPurchaseOptions(Object[] options, BigDecimal currentBalance) {
         out.println();
@@ -70,9 +81,7 @@ public class PurchaseMenu {
         out.println();
 
         // Display current balance in purchase menu
-        out.println("Current Money Provided: $" + currentBalance.setScale(2, RoundingMode.HALF_UP));
-        out.println();
-        out.flush();
+        displayBalance(currentBalance);
 
 
         //print menu options
@@ -92,9 +101,9 @@ public class PurchaseMenu {
     }
 
 
-/************************************************************************************
-       FEEDING MONEY - ASKING USER FOR MONEY INPUT AND ERRORS IF NOT AN INTEGER
- ***********************************************************************************/
+    /************************************************************************************
+     FEEDING MONEY - ASKING USER FOR MONEY INPUT AND ERRORS IF NOT AN INTEGER
+     ***********************************************************************************/
     public BigDecimal feedingMoney(BigDecimal currentBalance) {
         out.print(System.lineSeparator() + "Enter the amount of money to feed machine (Dollars only): $");
         out.flush();
@@ -108,14 +117,17 @@ public class PurchaseMenu {
                 out.print("Invalid amount. Please enter a positive amount.");
                 out.println();
                 out.flush();
+
             } else {
                 BigDecimal amountToAdd = BigDecimal.valueOf(amount).setScale(2, RoundingMode.HALF_UP);
+                //update the current balance
                 currentBalance = currentBalance.add(amountToAdd);
+
                 out.println("You have added $" + amountToAdd + " to the machine.\n");
                 out.println("Current Money Provided: $" + currentBalance.setScale(2, RoundingMode.HALF_UP) + "\n");
                 out.flush();
-//            in.nextLine();
             }
+
         } catch (NumberFormatException e) {
             out.print("Invalid input. Please enter a dollar amount.\n");
             out.flush();
@@ -123,46 +135,55 @@ public class PurchaseMenu {
         }
         return currentBalance;
     }
-
-
-
 
 
     /************************************************************************************
      SELECT PRODUCT - ASKING USER TO SELECT A PRODUCT
      ***********************************************************************************/
-    public BigDecimal selectProduct(String itemName) {
-        out.print(System.lineSeparator() + "Select product to purchase from machine:");
+
+
+    public BigDecimal selectProduct(BigDecimal currentBalance) {
+
+        //Use the displayItems method to show list of items available to buy
+        vendingMachineItems.loadInventory();
+
+
+        //Ask for user input
+        out.print(System.lineSeparator() + "Select product to purchase: ");
         out.flush();
+        String productCode = in.nextLine().toUpperCase();
+
+        BigDecimal productCost = vendingMachineItems.productCost(productCode);
 
 
-        try {
-            String itemChoice = new String itemName;
+        if (vendingMachineItems.isValidProductCode(productCode)) {
+            //Validating the productCode
+            out.println("You selected product " + productCode);
 
-            if (amount <= 0) {
-                out.print("Invalid amount. Please enter a positive amount.");
-                out.println();
-                out.flush();
-            } else {
-                BigDecimal amountToAdd = BigDecimal.valueOf(amount).setScale(2, RoundingMode.HALF_UP);
-                currentBalance = currentBalance.add(amountToAdd);
-                out.println("You have added $" + amountToAdd + " to the machine.\n");
-                out.println("Current Money Provided: $" + currentBalance.setScale(2, RoundingMode.HALF_UP) + "\n");
-                out.flush();
-//            in.nextLine();
+            //Check to verify balance is sufficient to buy item
+            if (currentBalance.compareTo(productCost) < 0) {
+                out.println("WHOMP WHOMP you don't have enough money please add more");
+                return currentBalance;
             }
-        } catch (NumberFormatException e) {
-            out.print("Invalid input. Please enter a dollar amount.\n");
+
+            //Process purchase and subtract item cost from current balance
+            currentBalance = currentBalance.subtract(productCost);
+
+            out.println("You have purchased the item " + productCode);
+            out.println("Remaining Balance: $" + currentBalance.setScale(2));
             out.flush();
 
+            return currentBalance;
+
+        } else {
+            // Invalid productCode
+            out.println("***    Invalid product code    ***");
+            out.flush();
+            return currentBalance;
         }
-        return currentBalance;
+
     }
-
-
-
 }
-
 
 
 // (2) Select Product - Code
