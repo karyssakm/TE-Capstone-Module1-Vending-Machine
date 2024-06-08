@@ -22,6 +22,8 @@ public class PurchaseMenu {
         this.out = new PrintWriter(output);
         this.in = new Scanner(input);
         this.vendingMachineItems = vendingMachineItems;
+
+
 //        this.currentMoneyProvided = 0;
     }
 
@@ -165,7 +167,7 @@ public class PurchaseMenu {
                 out.println("WHOMP WHOMP you don't have enough money please add more");
                 return currentBalance;
             }
-
+            if(vendingMachineItems.updateInventory(productCode, currentQuantity));
             //Process purchase and subtract item cost from current balance
             currentBalance = currentBalance.subtract(productCost);
 

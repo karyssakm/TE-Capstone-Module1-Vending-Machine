@@ -6,6 +6,8 @@ import org.w3c.dom.ls.LSOutput;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.math.BigDecimal;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
 
 import static java.lang.System.out;
@@ -14,19 +16,40 @@ import static java.lang.System.out;
 
 // Define a new class called VendingMachine
 public class VendingMachineItems {
-
+    private Map <String, Integer> itemList;
     private Scanner scanner;
 
 
     //constructor
     public VendingMachineItems() {
         scanner = new Scanner(System.in);
+        itemList = new HashMap<String, Integer>();
+
     }
 
-    //constructor
-//    public VendingMachineItems() {
-//
-//    }
+
+
+   public int updateInventory(String item, int quantity) {
+       int currentQuantity = itemList.getOrDefault(item ,5);
+       if (itemList.containsKey(item)) {
+           currentQuantity = itemList.get(item);
+           return currentQuantity;
+       }
+       if (currentQuantity > 0) {
+        itemList.put(item,currentQuantity -1);
+        return currentQuantity;
+       }else {
+           out.println("Item not found in the Inventory!");
+       }
+       return currentQuantity;
+   }
+
+
+
+
+
+
+
 
     /************************************************************************************
          MANAGING THE ITEMS AVAILABLE IN THE VENDING MACHINE
