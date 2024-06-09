@@ -1,5 +1,6 @@
 package com.techelevator.view;
 
+import com.techelevator.Items.Item;
 import com.techelevator.Items.VendingMachineItems;
 
 import java.awt.*;
@@ -33,8 +34,6 @@ public class PurchaseMenu {
     /************************************************************************************
      THE PURCHASE MENU IS RESPONSIBLE FOR MANAGING THE USER'S BALANCE AND THEIR PURCHASES
      ***********************************************************************************/
-
-
 
 
     /************************************************************************************
@@ -169,28 +168,26 @@ public class PurchaseMenu {
                 out.println("WHOMP WHOMP you don't have enough money please add more");
                 return currentBalance;
             }
-            if(vendingMachineItems.updateInventory(productCode, 0) <= 0){
+            if (vendingMachineItems.updateInventory(productCode, 0) <= 0) {
                 out.println("Sorry our itens are too good! Sold Out");
                 return currentBalance;
             }
 
-            String message = "";
-            Selectitem;
-            if  ( vendingMachineItems.)
-
-
-
             //Process purchase and subtract item cost from current balance
-           int currentQuantity = vendingMachineItems.updateInventory(productCode, 5);
+            int currentQuantity = vendingMachineItems.updateInventory(productCode, 5);
             out.println("There are only:" + currentQuantity + " remaining");
+            // Process to call out special message from the list of items
+            String productName = vendingMachineItems.snackName(productCode);
+
+            String message = specialMessage(productName);
+            out.println("Dispensing " +  productName + " for $"+ productCost.setScale(2)+" Remaining Balance: $" + currentBalance.setScale(2));
+            out.println(message );
+
 
             currentBalance = currentBalance.subtract(productCost);
             // Update Inventory after purchasing an item
-            vendingMachineItems.updateInventory(productCode,currentQuantity);
-            out.println("You have purchased the item " + productCode);
-            out.println("Remaining Balance: $" + currentBalance.setScale(2));
+            vendingMachineItems.updateInventory(productCode, currentQuantity);
             out.flush();
-
             return currentBalance;
 
         } else {
@@ -203,11 +200,44 @@ public class PurchaseMenu {
     }
 
 
-
-
-
-
-
+    // Method for the message to connect with the product code and product name together
+    private String specialMessage(String productName) {
+        if ("Potato Crisps".equals(productName)) {
+            return "Crunch Crunch, It's Yummy!";
+        } else if ("Stackers".equals(productName)) {
+            return "Crunch Crunch, It's Yummy!";
+        } else if ("Grain Waves".equals(productName)) {
+            return "Crunch Crunch, It's Yummy!";
+        } else if ("Cloud Popcorn".equals(productName)) {
+            return "Crunch Crunch, It's Yummy!";
+        } else if ("Moonpie".equals(productName)) {
+            return "Munch Munch, Mmm Mmm Good!";
+        } else if ("Cowtales".equals(productName)) {
+            return "Munch Munch, Mmm Mmm Good!";
+        } else if ("Wonka Bar".equals(productName)) {
+            return "Munch Munch, Mmm Mmm Good!";
+        } else if ("Crunchie".equals(productName)) {
+            return "Munch Munch, Mmm Mmm Good!";
+        } else if ("Cola".equals(productName)) {
+            return "Glug Glug, Chug Chug!";
+        } else if ("Dr. Salt".equals(productName)) {
+            return "Glug Glug, Chug Chug!";
+        } else if ("Mountain Melter".equals(productName)) {
+            return "Glug Glug, Chug Chug!";
+        } else if ("Heavy".equals(productName)) {
+            return "Glug Glug, Chug Chug!";
+        } else if ("U-Chews".equals(productName)) {
+            return "Chew Chew, Pop!";
+        } else if ("Little League Chew".equals(productName)) {
+            return "Chew Chew, Pop!";
+        } else if ("Chiclets".equals(productName)) {
+            return "Chew Chew, Pop!";
+        } else if ("Triplemint".equals(productName)) {
+            return "Chew Chew, Pop!";
+        } else {
+            return "";
+        }
+    }
 }
 
 

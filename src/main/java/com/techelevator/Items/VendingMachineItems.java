@@ -1,8 +1,5 @@
 package com.techelevator.Items;
 
-import com.techelevator.VendingMachineCLI;
-import org.w3c.dom.ls.LSOutput;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.math.BigDecimal;
@@ -19,9 +16,12 @@ public class VendingMachineItems {
     private Map <String, Integer> itemList= new HashMap<>();
     private Scanner scanner;
 
+    private Map<String, String> itemNames = new HashMap<>();
+
     //constructor
     public VendingMachineItems() {
         scanner = new Scanner(System.in);
+
 //        itemList = new HashMap<String, Integer>();
 
     }
@@ -94,6 +94,8 @@ public class VendingMachineItems {
                 BigDecimal productPrice = new BigDecimal(items [2]);
                 String productCategory = items[3];
 
+                itemList.put(productCode,5);
+                itemNames.put(productCode, productName);
 
 
                 String productItems = String.format("%s %-20s %.2f ", items[0], items[1], Double.parseDouble(items[2]) );
@@ -103,7 +105,17 @@ public class VendingMachineItems {
         } catch (FileNotFoundException e) {
             out.println("File Not Found: " + e.getMessage());
         }
+
     }
+        // this method connects the product code with the snackName
+    public  String snackName(String productName){
+        return itemNames.getOrDefault(productName, "unknown");
+
+    }
+
+
+
+
 
 
     /************************************************************************************
