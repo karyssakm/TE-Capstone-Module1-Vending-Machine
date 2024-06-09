@@ -12,13 +12,13 @@ public class VendingMachineCLI {
     private static final String MAIN_MENU_OPTION_DISPLAY_ITEMS = "Display Vending Machine Items";
     private static final String MAIN_MENU_OPTION_PURCHASE = "Purchase";
     private static final String MAIN_MENU_OPTION_EXIT = "Exit";
-//    private static final String MAIN_MENU_SECRET_OPTION = "*Sales Report";
+    private static final String MAIN_MENU_SECRET_OPTION = "*Sales Report";
 
     private static final String PURCHASE_MENU_OPTION_FEED_MONEY = "Feed Money";
     private static final String PURCHASE_MENU_OPTION_SELECT_PRODUCT = "Select Product";
     private static final String PURCHASE_MENU_OPTION_FINISH_TRANSACTION = "Finish Transaction";
 
-    private static final String[] MAIN_MENU_OPTIONS = {MAIN_MENU_OPTION_DISPLAY_ITEMS, MAIN_MENU_OPTION_PURCHASE, MAIN_MENU_OPTION_EXIT}; //MAIN_MENU_SECRET_OPTION};
+    private static final String[] MAIN_MENU_OPTIONS = {MAIN_MENU_OPTION_DISPLAY_ITEMS, MAIN_MENU_OPTION_PURCHASE, MAIN_MENU_OPTION_EXIT, MAIN_MENU_SECRET_OPTION};
     private static final String[] PURCHASE_MENU_OPTIONS = {PURCHASE_MENU_OPTION_FEED_MONEY, PURCHASE_MENU_OPTION_SELECT_PRODUCT, PURCHASE_MENU_OPTION_FINISH_TRANSACTION};
 
 
@@ -61,7 +61,9 @@ public class VendingMachineCLI {
 			} else if (choice.equals(MAIN_MENU_OPTION_EXIT)) {
 //                purchaseMenu.logTransaction("EXIT", currentBalance, BigDecimal.ZERO);
 				running = false;
-			}
+			} else if (choice.equals(MAIN_MENU_SECRET_OPTION)) {
+                generateSalesReport();
+            }
 		}
 	}
 
@@ -99,13 +101,21 @@ public class VendingMachineCLI {
     }
 
 
-// method to display balance below the title in the purchase menu option
+    // method to display balance below the title in the purchase menu option
     private void displayCurrentBalance() {
         purchaseMenu.displayBalance(this.currentBalance);
     }
 
 
+    //generate sales report
+    private void generateSalesReport() {
+        vendingMachineItems.generateSalesReport();
+        System.out.println("Sales report generated.");
+    }
+
+
     public static void main(String[] args) {
+
         VendingMachineItems vendingMachineItems = new VendingMachineItems();
         VendingMenu menu = new VendingMenu(System.in, System.out);
         PurchaseMenu purchaseMenu = new PurchaseMenu(System.in , System.out, vendingMachineItems);

@@ -22,6 +22,7 @@ public class PurchaseMenu {
 
 
     public PurchaseMenu(InputStream input, OutputStream output, VendingMachineItems vendingMachineItems) {
+
         this.out = new PrintWriter(output);
         this.in = new Scanner(input);
         this.vendingMachineItems = vendingMachineItems;
@@ -37,10 +38,13 @@ public class PurchaseMenu {
 
     // SHOWING MENU OPTIONS BASED ON USER INPUT
     public Object getChoiceFromPurchaseOptions(Object[] options, BigDecimal currentBalance) {
+
         Object choice = null;
+
         while (choice == null) {
             displayPurchaseOptions(options, currentBalance);
             choice = purchaseOptionFromUserInput(options);
+
         }
         return choice;
     }
@@ -48,19 +52,23 @@ public class PurchaseMenu {
 
     //GETTING INPUT FROM USER
     private Object purchaseOptionFromUserInput(Object[] options) {
+
         Object choice = null;
         String userInput = in.nextLine();
+
         try {
             int selectedOption = Integer.valueOf(userInput);
             if (selectedOption > 0 && selectedOption <= options.length) {
                 choice = options[selectedOption - 1];
             }
+
         } catch (NumberFormatException e) {
             // eat the exception, an error message will be displayed below since choice will be null
         }
         if (choice == null) {
             out.println(System.lineSeparator() + "*** " + userInput + " is not a valid option ***" + System.lineSeparator());
         }
+
         return choice;
     }
 
@@ -78,6 +86,7 @@ public class PurchaseMenu {
 
         // Display current balance in purchase menu
         out.println("Current Money Provided: $" + currentBalance.setScale(2, RoundingMode.HALF_UP));
+        out.println();
 
 
         //print menu options
@@ -85,6 +94,7 @@ public class PurchaseMenu {
             int optionNum = i + 1;
             out.println(optionNum + ") " + options[i]);
         }
+
         out.print(System.lineSeparator() + "Please choose an option >>> ");
         out.flush();
     }
@@ -101,17 +111,19 @@ public class PurchaseMenu {
      FEEDING MONEY - ASKING USER FOR MONEY INPUT AND ERRORS IF NOT AN INTEGER
      ***********************************************************************************/
     public BigDecimal feedingMoney(BigDecimal currentBalance) {
-        out.print("Enter the amount of money to feed machine (Dollars only): $");
+
+        out.print(System.lineSeparator() + "Enter the amount of money to feed machine (Dollars only): $");
         out.flush();
 
         try {
             int amount = Integer.parseInt(in.nextLine());
+
             if (amount > 0) {
                 BigDecimal amountToAdd = BigDecimal.valueOf(amount).setScale(2, RoundingMode.HALF_UP);
                 currentBalance = currentBalance.add(amountToAdd);
-                out.println("You have added $" + amountToAdd + " to the machine.");
-                out.println("Current Money Provided: $" + currentBalance.setScale(2, RoundingMode.HALF_UP));
+                out.println("\nNice! You have added $" + amountToAdd + " to your balance.");
                 out.flush();
+
             } else {
                 out.println("Invalid amount. Please enter a positive amount.");
             }
@@ -128,28 +140,35 @@ public class PurchaseMenu {
     public BigDecimal selectProduct(BigDecimal currentBalance) {
         vendingMachineItems.displayItems(); // Display items only once
 
+        //ask user for product code to purchase
         out.print(System.lineSeparator() + "Select product to purchase: ");
         out.flush();
         String productCode = in.nextLine().toUpperCase();
 
         if (vendingMachineItems.isValidProductCode(productCode)) {
+
             BigDecimal productCost = vendingMachineItems.productCost(productCode);
-            out.println("Current balance before purchase: $" + currentBalance);
-            out.println("Product cost: $" + productCost);
+
             if (currentBalance.compareTo(productCost) >= 0) {
+
                 if (vendingMachineItems.updateInventory(productCode) > 0) {
+
                     String productName = vendingMachineItems.snackName(productCode);
+
                     currentBalance = currentBalance.subtract(productCost); // Update current balance
-                    out.println("Current balance after purchase: $" + currentBalance);
-                    out.println("Dispensing " + productName + " for $" + productCost.setScale(2) + ". Remaining Balance: $" + currentBalance.setScale(2));
+
+                    out.println("\nDispensing " + productName + " for $" + productCost.setScale(2) + ". Remaining Balance: $" + currentBalance.setScale(2));
                     out.println(specialMessage(productName));
                     out.flush();
+
                 } else {
                     out.println("Sorry, the item is SOLD OUT.");
                 }
+
             } else {
-                out.println("Insufficient funds. Please add more money.");
+                out.println("WOMP WOMP Insufficient funds. Please add more money.");
             }
+
         } else {
             out.println("Invalid product code.");
         }
@@ -159,27 +178,33 @@ public class PurchaseMenu {
 
     // Method for the message to connect with the product code and product name together
     private String specialMessage(String productName) {
+
         switch (productName) {
+
             case "Potato Crisps":
             case "Stackers":
             case "Grain Waves":
             case "Cloud Popcorn":
                 return "Crunch Crunch, It's Yummy!";
+
             case "Moonpie":
             case "Cowtales":
             case "Wonka Bar":
             case "Crunchie":
                 return "Munch Munch, Mmm Mmm Good!";
+
             case "Cola":
             case "Dr. Salt":
             case "Mountain Melter":
             case "Heavy":
                 return "Glug Glug, Chug Chug!";
+
             case "U-Chews":
             case "Little League Chew":
             case "Chiclets":
             case "Triplemint":
                 return "Chew Chew, Pop!";
+
             default:
                 return "";
         }
@@ -192,11 +217,13 @@ public class PurchaseMenu {
 
     //FINISH TRANSACTION
     public void finishTransaction(BigDecimal currentBalance) {
+
         returnChange(currentBalance); // Call returnChange without passing currentBalance
         this.currentBalance = BigDecimal.ZERO; // Reset currentBalance to zero
     }
 
     private void returnChange(BigDecimal remainingBalance) {
+
         int remainingBalanceInCents = remainingBalance.multiply(new BigDecimal("100")).intValue();
 
         int quarters = remainingBalanceInCents / 25;
@@ -218,6 +245,7 @@ public class PurchaseMenu {
 
     //LOG TRANSACTION
     public void logTransaction(String action, BigDecimal amount, BigDecimal newBalance) {
+
         try (FileWriter fileWriter = new FileWriter("Log.txt", true);
              PrintWriter logWriter = new PrintWriter(fileWriter)) {
 
@@ -227,6 +255,7 @@ public class PurchaseMenu {
 
             logWriter.printf("%s %s: $%.2f $%.2f\n", formattedDate, action, amount, newBalance);
             System.out.println("Log entry created: " + formattedDate + " " + action + ": $" + amount);
+
         } catch (IOException e) {
             System.out.println("Error writing to log file: " + e.getMessage());
         }
