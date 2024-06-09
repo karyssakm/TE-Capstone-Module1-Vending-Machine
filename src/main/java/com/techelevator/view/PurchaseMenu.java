@@ -2,6 +2,8 @@ package com.techelevator.view;
 
 import com.techelevator.Items.VendingMachineItems;
 
+import java.awt.*;
+import java.awt.event.ItemListener;
 import java.io.File;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -163,21 +165,28 @@ public class PurchaseMenu {
             out.println("You selected product " + productCode);
 
             //Check to verify balance is sufficient to buy item
-            if (currentBalance.compareTo(productCost) < 0) {
+            if (currentBalance.compareTo(productCost) <= 0) {
                 out.println("WHOMP WHOMP you don't have enough money please add more");
                 return currentBalance;
             }
-            if(vendingMachineItems.updateInventory(productCode) <= 0){
+            if(vendingMachineItems.updateInventory(productCode, 0) <= 0){
                 out.println("Sorry our itens are too good! Sold Out");
                 return currentBalance;
             }
 
+            String message = "";
+            Selectitem;
+            if  ( vendingMachineItems.)
+
+
+
             //Process purchase and subtract item cost from current balance
-           int currentQuantity = vendingMachineItems.updateInventory(productCode);
+           int currentQuantity = vendingMachineItems.updateInventory(productCode, 5);
+            out.println("There are only:" + currentQuantity + " remaining");
 
             currentBalance = currentBalance.subtract(productCost);
             // Update Inventory after purchasing an item
-            vendingMachineItems.updateInventory(productCode,currentQuantity-1 );
+            vendingMachineItems.updateInventory(productCode,currentQuantity);
             out.println("You have purchased the item " + productCode);
             out.println("Remaining Balance: $" + currentBalance.setScale(2));
             out.flush();
@@ -192,6 +201,13 @@ public class PurchaseMenu {
         }
 
     }
+
+
+
+
+
+
+
 }
 
 

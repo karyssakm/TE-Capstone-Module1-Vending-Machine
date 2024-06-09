@@ -10,6 +10,7 @@ public class VendingMenu {
 	private PrintWriter out;
 	private Scanner in;
 
+	private int inventoryAvailable;
 	public VendingMenu(InputStream input, OutputStream output) {
 		this.out = new PrintWriter(output);
 		this.in = new Scanner(input);
